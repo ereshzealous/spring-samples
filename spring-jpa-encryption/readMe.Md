@@ -1,12 +1,12 @@
 # Spring Boot JPA Data Encryption
 
-There will be seevral use cases to encrypt user data to hide sensitive information like email, mobile, address other details.
+There will be several use cases to encrypt user data to hide sensitive information like email, mobile, address other details.
 In order to achieve above use case consider below two ways.
 1. Use any of AES encryption techniques and perform encrypt and decrypt every time call is made on table.
 2. At database side, with the help of trigger add own data base encryption technique on column for every insert and update.
 
-Downsides of above two apporaches
-1. If any of AES encryption techniques are used it will be eextreemly hard to write select query for search. If you want to search a product by name phone, and you are perfroming wildcard search the data is not matched at all. 
+Downsides of above two approaches
+1. If any of AES encryption techniques are used it will be extremely hard to write select query for search. If you want to search a product by name phone, and you are performing wildcard search the data is not matched at all. 
 2. The second one is pretty of for inserts, but for retrieving a plain query by passing encryption functions have to be performed. So JPA concepts can not be applied here, spring jdbc template has to be used here.
 
 ## Spring JPA feature used to write and read encrypted data from and RDBMS.
@@ -21,7 +21,7 @@ In this code sample we have used below configurations
 * **Spring Boot 2.1.8.Release**
 * **PostGresql 12**
 * **Postman for testing**
-* **Liquibase as ddl creation** (We will have in another tuitorial for details)
+* **Liquibase as ddl creation** (We will have in another tutorial for details)
 
 ### DB Settings
 If you are using Postgres, you have to enable few extensions before working on this code sample.
@@ -33,7 +33,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto"
 ```sql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
 ```
-Incase if not interested to use liquibase. Below is the create table sql.
+In case if not interested to use liquibase. Below is the create table sql.
 ```sql
 CREATE TABLE public.user_details
 (
@@ -51,7 +51,7 @@ CREATE TABLE public.user_details
 )
 ```
 
-### Datatype is bytea
+### Data type is bytea
 As there is encryption we have to take right data type supported for data encryption.
 
 ### Entity Class
