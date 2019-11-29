@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+    <property name="u_id" value="uuid()" dbms="mysql"/>
+    <property name="u_id" value="uuid_generate_v4()" dbms="postgresql"/>
+    <property name="json.type" value="json" dbms="mysql"/>
+    <property name="json.type" value="jsonb" dbms="postgreql"/>
+    <property name="timestamp" value="datetime" dbms="mysql"/>
+    <property name="timestamp" value="timestamp" dbms="postgresql"/>
+    <property name="encryption.type" value="VARBINARY" dbms="mysql"/>
+    <property name="encryption.type" value="bytea" dbms="postgresql"/>
+    <property name="clob.type" value="LONGTEXT" dbms="mysql"/>
+    <property name="clob.type" value="TEXT" dbms="postgresql"/>
+
+    <changeSet id="db_configs-1" author="eresh">
+        <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp"</sql>
+        <sql>CREATE EXTENSION IF NOT EXISTS pgcrypto</sql>
+    </changeSet>
+
+    <changeSet id="user_details-1" author="eresh">
+        <createTable tableName="user_details">
+            <column name="id" type="varchar(100)" valueComputed="${u_id}"/>
+            <column name="email_id" type="${encryption.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mobile_number" type="${encryption.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="${encryption.type}"/>
+            <column name="last_name" type="${encryption.type}"/>
+            <column name="date_of_birth" type="${timestamp}"/>
+            <column name="city" type="varchar(50)"/>
+            <column name="address" type="${encryption.type}"/>
+            <column name="created_date" type="${timestamp}"/>
+            <column name="updated_date" type="${timestamp}"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="user_details-2" author="eresh">
+        <addPrimaryKey tableName="user_details" columnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
