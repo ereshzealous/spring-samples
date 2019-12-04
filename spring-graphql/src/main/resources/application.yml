@@ -1,0 +1,38 @@
+server:
+  port: 9002
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/spring-graphql?useLegacyDatetimeCode=false&useSSL=false
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:/db/master.xml
+    enabled: true
+    user: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      connection:
+        provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+      ddl-auto: none
+    properties:
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        enable_lazy_load_no_trans: true
+        jdbc:
+          time_zone: UTC
+          batch_size: 50
+          lob:
+            non_contextual_creation: true
+    show-sql: false
+    open-in-view: false
+
+graphql:
+  spqr:
+    gui:
+      enabled: true

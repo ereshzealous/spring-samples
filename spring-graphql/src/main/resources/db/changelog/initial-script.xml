@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+    <property name="u_id" value="uuid()" dbms="mysql"/>
+    <property name="u_id" value="uuid_generate_v4()" dbms="postgresql"/>
+    <property name="json.type" value="json" dbms="mysql"/>
+    <property name="json.type" value="jsonb" dbms="postgreql"/>
+    <property name="timestamp" value="datetime" dbms="mysql"/>
+    <property name="timestamp" value="timestamp" dbms="postgresql"/>
+    <property name="encryption.type" value="VARBINARY" dbms="mysql"/>
+    <property name="encryption.type" value="bytea" dbms="postgresql"/>
+    <property name="clob.type" value="LONGTEXT" dbms="mysql"/>
+    <property name="clob.type" value="TEXT" dbms="postgresql"/>
+
+    <changeSet id="db_configs-1" author="eresh">
+        <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp"</sql>
+    </changeSet>
+
+    <changeSet id="author-1" author="eresh">
+        <createTable tableName="author">
+            <column name="id" type="varchar(100)" valueComputed="${u_id}"/>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_birth" type="${timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="int"/>
+            <column name="email_id" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mobile_number" type="varchar(20)"/>
+            <column name="created_date" type="${timestamp}"/>
+            <column name="updated_date" type="${timestamp}"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="author-2" author="eresh">
+        <addPrimaryKey tableName="author" columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="publication-1" author="eresh">
+        <createTable tableName="publication">
+            <column name="id" type="varchar(100)" valueComputed="${u_id}"/>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(500)"/>
+            <column name="address" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="site_link" type="varchar(300)"/>
+            <column name="registration" type="varchar(100)"/>
+            <column name="establishment_date" type="${timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_address" type="varchar(50)"/>
+            <column name="contact_numbers" type="varchar(100)"/>
+            <column name="created_date" type="${timestamp}"/>
+            <column name="updated_date" type="${timestamp}"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="publication-2" author="eresh">
+        <addPrimaryKey tableName="publication" columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="language" author="eresh">
+        <createTable tableName="language">
+            <column name="id" type="varchar(100)" valueComputed="${u_id}"/>
+            <column name="name" type="varchar(40)"/>
+            <column name="description" type="varchar(500)"/>
+            <column name="short_code" type="varchar(3)"/>
+            <column name="created_date" type="${timestamp}"/>
+            <column name="updated_date" type="${timestamp}"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="language-2" author="eresh">
+        <addPrimaryKey tableName="language" columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="book-1" author="eresh">
+        <createTable tableName="book">
+            <column name="id" type="varchar(100)" valueComputed="${u_id}"/>
+            <column name="book_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="${timestamp}"/>
+            <column name="updated_date" type="${timestamp}"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="book-2" author="eresh">
+        <addPrimaryKey tableName="book" columnNames="id"/>
+    </changeSet>
+
+    <changeSet id="book_authors-1" author="eresh">
+        <createTable tableName="book_authors">
+            <column name="book_id" type="varchar(100)"/>
+            <column name="author_id" type="varchar(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="book_authors-2" author="eresh">
+        <addForeignKeyConstraint baseTableName="book_authors" baseColumnNames="book_id"
+                                 constraintName="fk1_book_authors" referencedTableName="book"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book_authors" baseColumnNames="author_id"
+                                 constraintName="fk2_book_authors" referencedTableName="author"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="book_publications-1" author="eresh">
+        <createTable tableName="book_publications">
+            <column name="book_id" type="varchar(100)"/>
+            <column name="publication_id" type="varchar(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="book_publications-2" author="eresh">
+        <addForeignKeyConstraint baseTableName="book_publications" baseColumnNames="book_id"
+                                 constraintName="fk1_book_publications" referencedTableName="book"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book_publications" baseColumnNames="publication_id"
+                                 constraintName="fk2_book_publications" referencedTableName="publication"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="book_languages-1" author="eresh">
+        <createTable tableName="book_languages">
+            <column name="book_id" type="varchar(100)"/>
+            <column name="language_id" type="varchar(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="book_languages-2" author="eresh">
+        <addForeignKeyConstraint baseTableName="book_languages" baseColumnNames="book_id"
+                                 constraintName="fk1_book_languages" referencedTableName="book"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book_languages" baseColumnNames="language_id"
+                                 constraintName="fk2_book_languages" referencedTableName="language"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

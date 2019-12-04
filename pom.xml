@@ -20,6 +20,7 @@
 
     <modules>
         <module>spring-jpa-encryption</module>
+        <module>spring-graphql</module>
     </modules>
 
     <dependencies>
@@ -37,6 +38,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <dependency>
