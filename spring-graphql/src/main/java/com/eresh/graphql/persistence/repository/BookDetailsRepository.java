@@ -5,8 +5,6 @@ import com.eresh.graphql.persistence.entity.BookDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * Created By Gorantla, Eresh on 03/Dec/2019
  **/

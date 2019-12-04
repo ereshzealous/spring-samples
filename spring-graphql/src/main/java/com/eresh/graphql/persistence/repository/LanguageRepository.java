@@ -16,4 +16,6 @@ public interface LanguageRepository extends JpaRepository<Language, String> {
 	Language findByShortCodeAndName(String shortCode, String name);
 
 	List<Language> findByIdIn(List<String> ids);
+
+	List<Language> findByNameContainsIgnoreCase(String language);
 }

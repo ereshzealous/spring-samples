@@ -2,6 +2,8 @@ package com.eresh.graphql.persistence.repository;
 
 import com.eresh.graphql.persistence.entity.Author;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +22,6 @@ public interface AuthorRepository extends JpaRepository<Author, String> {
 	List<Author> findByNameContains(String name);
 
 	List<Author> findByIdIn(List<String> ids);
+
+	Page<Author> findAll(Pageable pageable);
 }

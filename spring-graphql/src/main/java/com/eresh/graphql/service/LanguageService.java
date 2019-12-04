@@ -4,11 +4,14 @@ import com.eresh.graphql.persistence.entity.Language;
 import com.eresh.graphql.persistence.repository.LanguageRepository;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
+import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created By Gorantla, Eresh on 03/Dec/2019
@@ -29,5 +32,15 @@ public class LanguageService {
 			}
 		}
 		return languageRepository.save(language);
+	}
+
+	@GraphQLQuery(name = "allLanguages")
+	public List<Language> getAllLanguages() {
+		return languageRepository.findAll();
+	}
+
+	@GraphQLQuery(name = "getLanguageByName")
+	public List<Language> getLanguageByName(@GraphQLArgument(name = "language") String language) {
+		return languageRepository.findByNameContainsIgnoreCase(language);
 	}
 }
