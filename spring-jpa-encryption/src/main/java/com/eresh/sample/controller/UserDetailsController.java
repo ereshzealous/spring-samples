@@ -6,9 +6,13 @@ import com.eresh.sample.persistence.repository.UserDetailsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 /**
  * Created By Gorantla, Eresh on 29/Nov/2019
@@ -29,5 +33,11 @@ public class UserDetailsController {
 		userDetails.setLastName(request.getLastName());
 		userDetails.setMobileNumber(request.getMobileNumber());
 		return ResponseEntity.ok(userDetailsRepository.save(userDetails));
+	}
+
+	@GetMapping("/user")
+	public ResponseEntity<UserDetails> getUserDetails(@RequestParam(name = "id") String id) {
+		Optional<UserDetails> optionalUserDetails = userDetailsRepository.findById(id);
+		return ResponseEntity.ok(optionalUserDetails.isPresent() ? optionalUserDetails.get() : null);
 	}
 }

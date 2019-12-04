@@ -28,23 +28,23 @@ public class UserDetails {
 	@GenericGenerator(name="system-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 	private String id;
 
-	@ColumnTransformer(forColumn = "emailId", read = "pgp_sym_decrypt(age, 'password')", write = "pgp_sym_encrypt(?, 'password')")
-	@Column(name = "emailId", columnDefinition = "bytea")
+	@ColumnTransformer(forColumn = "email_id", read = "pgp_sym_decrypt(email_id, 'password')", write = "pgp_sym_encrypt(?, 'password')")
+	@Column(name = "email_id", columnDefinition = "bytea")
 	private String emailId;
 
-	@ColumnTransformer(forColumn = "mobile_number", read = "pgp_sym_decrypt(age, 'password')", write = "pgp_sym_encrypt(?, 'password')")
+	@ColumnTransformer(forColumn = "mobile_number", read = "pgp_sym_decrypt(mobile_number, 'password')", write = "pgp_sym_encrypt(?, 'password')")
 	@Column(name = "mobile_number", columnDefinition = "bytea")
 	private String mobileNumber;
 
-	@ColumnTransformer(forColumn = "first_name", read = "pgp_sym_decrypt(age, 'password')", write = "pgp_sym_encrypt(?, 'password')")
+	@ColumnTransformer(forColumn = "first_name", read = "pgp_sym_decrypt(first_name, 'password')", write = "pgp_sym_encrypt(?, 'password')")
 	@Column(name = "first_name", columnDefinition = "bytea")
 	private String firstName;
 
-	@ColumnTransformer(forColumn = "last_name", read = "pgp_sym_decrypt(age, 'password')", write = "pgp_sym_encrypt(?, 'password')")
+	@ColumnTransformer(forColumn = "last_name", read = "pgp_sym_decrypt(last_name, 'password')", write = "pgp_sym_encrypt(?, 'password')")
 	@Column(name = "last_name", columnDefinition = "bytea")
 	private String lastName;
 
-	@ColumnTransformer(forColumn = "address", read = "pgp_sym_decrypt(age, 'password')", write = "pgp_sym_encrypt(?, 'password')")
+	@ColumnTransformer(forColumn = "address", read = "pgp_sym_decrypt(address, 'password')", write = "pgp_sym_encrypt(?, 'password')")
 	@Column(name = "address", columnDefinition = "bytea")
 	private String address;
 

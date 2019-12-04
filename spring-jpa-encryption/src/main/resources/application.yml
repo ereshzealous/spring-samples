@@ -28,5 +28,5 @@ spring:
           batch_size: 50
           lob:
             non_contextual_creation: true
-    show-sql: false
+    show-sql: true
     open-in-view: false
