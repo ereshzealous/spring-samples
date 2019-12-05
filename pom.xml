@@ -21,6 +21,7 @@
     <modules>
         <module>spring-jpa-encryption</module>
         <module>spring-graphql</module>
+        <module>wiremock-demo</module>
     </modules>
 
     <dependencies>
