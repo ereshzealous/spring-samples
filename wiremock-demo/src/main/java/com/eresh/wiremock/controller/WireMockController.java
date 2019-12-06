@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class WireMockController {
 		headers.put("secret-key", UUID.randomUUID()
 		                              .toString());
 		ResponseEntity<WSUserDetails> responseEntity = baseRestOutboundProcessor.post(baseUrl + "api/user", request, WSUserDetails.class,
-		                                                                             headers);
+		                                                                              headers);
 		return ResponseEntity.ok(responseEntity != null ? responseEntity.getBody() : null);
 	}
 
@@ -52,7 +53,7 @@ public class WireMockController {
 		headers.put("secret-key", UUID.randomUUID()
 		                              .toString());
 		ResponseEntity<WSUserDetails> responseEntity = baseRestOutboundProcessor.put(baseUrl + "/api/user", request, WSUserDetails.class,
-		                                                                            headers);
+		                                                                             headers);
 		return ResponseEntity.ok(responseEntity != null ? responseEntity.getBody() : null);
 	}
 
@@ -64,18 +65,18 @@ public class WireMockController {
 		headers.put("secret-key", UUID.randomUUID()
 		                              .toString());
 		ResponseEntity<WSUserDetails> responseEntity = baseRestOutboundProcessor.get(baseUrl + "/api/user", request, WSUserDetails.class,
-		                                                                            headers);
+		                                                                             headers);
 		return ResponseEntity.ok(responseEntity != null ? responseEntity.getBody() : null);
 	}
 
 	@DeleteMapping("/user")
-	public ResponseEntity<RestResponse> deleteUser(@RequestBody WSUserDetails request) {
+	public ResponseEntity<RestResponse> deleteUser(@RequestParam("id") String id) {
 		Map<String, String> headers = new HashMap<>();
 		headers.put("access-key", UUID.randomUUID()
 		                              .toString());
 		headers.put("secret-key", UUID.randomUUID()
 		                              .toString());
-		ResponseEntity<RestResponse> responseEntity = baseRestOutboundProcessor.delete(baseUrl + "api/user", request, RestResponse.class,
+		ResponseEntity<RestResponse> responseEntity = baseRestOutboundProcessor.delete(baseUrl + "api/user?id=" + id, null, RestResponse.class,
 		                                                                               headers);
 		return ResponseEntity.ok(responseEntity != null ? responseEntity.getBody() : null);
 	}

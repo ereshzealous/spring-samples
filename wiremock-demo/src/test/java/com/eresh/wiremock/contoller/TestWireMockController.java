@@ -134,6 +134,26 @@ public class TestWireMockController {
 		assertUserDetails(expectedResponse, actualResponse);
 	}
 
+	@Test
+	public void testDeleteUser() throws Exception {
+		RestResponse expectedResponse = new RestResponse();
+		String expectedResponseString = objectMapper.writeValueAsString(expectedResponse);
+		String id = UUID.randomUUID()
+		                .toString();
+		wireMockRule.stubFor(WireMock.delete(WireMock.urlPathEqualTo("/api/user?id=" + id))
+		                             .willReturn(WireMock.aResponse()
+		                                                 .withBody(expectedResponseString)
+		                                                 .withStatus(HttpStatus.OK.value())
+		                                                 .withHeader("Content-Type",
+		                                                             "application/json;charset=UTF-8")));
+		ResponseEntity<RestResponse> responseEntity = controller.deleteUser(id);
+		assertNotNull(responseEntity);
+		assertTrue(responseEntity.getBody() instanceof RestResponse);
+		RestResponse actualResponse = (RestResponse) responseEntity.getBody();
+		assertNotNull(actualResponse);
+		assertEquals(expectedResponse.getResult(), actualResponse.getResult());
+	}
+
 	private WSUserDetails generateWSUserDetails() {
 		WSUserDetails details = new WSUserDetails();
 		details.setCity(RandomStringUtils.randomAlphabetic(10));
@@ -153,5 +173,6 @@ public class TestWireMockController {
 		assertEquals(expected.getCountry(), actual.getCountry());
 		assertEquals(expected.getId(), actual.getId());
 		assertEquals(expected.getDateOfBirth(), actual.getDateOfBirth());
+		assertEquals(expected.getResult(), actual.getResult());
 	}
 }
