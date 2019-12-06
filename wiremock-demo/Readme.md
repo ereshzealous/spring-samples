@@ -1,0 +1,1 @@
+Please see Complete Article [Here](https://medium.com/@eresh.zealous/integration-tests-in-spring-using-wiremock-42e214618aea)
