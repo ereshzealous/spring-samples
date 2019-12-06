@@ -14,15 +14,14 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -44,22 +43,16 @@ public class TestWireMockController {
 	public static WireMockRule wireMockRule = new WireMockRule(8900);
 
 	@Autowired
-	private RestTemplate restTemplate;
-
-	@Autowired
-	Environment environment;
-
-	@Autowired
 	WireMockController controller;
 
-	/*@Value("#{systemproperties['server.port']}")
-	private Integer port;*/
+	@Value("${third.party.base.url}")
+	private String url;
 
 	ObjectMapper objectMapper = new CustomObjectMapper();
 
 	@Before
 	public void init() {
-		ReflectionTestUtils.setField(controller, "baseUrl", "http://localhost:8900/");
+		ReflectionTestUtils.setField(controller, "baseUrl", url);
 		wireMockRule.resetMappings();
 		wireMockRule.resetScenarios();
 		wireMockRule.resetRequests();
